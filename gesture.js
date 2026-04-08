@@ -1,43 +1,64 @@
 const videoElement = document.getElementById('camera');
 
+let hands;
+let camera;
+let gestureEnabled = false;
+
 function isFist(landmarks) {
   const tips = [8, 12, 16, 20];
   const palm = landmarks[0];
-  return tips.every(tip => {
+
+  let closedCount = 0;
+
+  tips.forEach(tip => {
     const dx = landmarks[tip].x - palm.x;
     const dy = landmarks[tip].y - palm.y;
-    return Math.sqrt(dx * dx + dy * dy) < 0.15;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+
+    if (dist < 0.28) { // nới lỏng điều kiện
+      closedCount++;
+    }
   });
+
+  return closedCount >= 3; // chỉ cần 3 ngón co lại
 }
 
 function onResults(results) {
-  if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
-    const landmarks = results.multiHandLandmarks[0];
-    if (isFist(landmarks)) {
-      triggerHeartFormation();
-    }
+  if (!results.multiHandLandmarks || results.multiHandLandmarks.length === 0) return;
+
+  const landmarks = results.multiHandLandmarks[0];
+
+  if (isFist(landmarks)) {
+    triggerHeartFormation();
   }
 }
 
-async function initCamera() {
+async function initHandTracking() {
+  if (gestureEnabled) return;
+  gestureEnabled = true;
+
   try {
-    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: "user" }
+    });
+
     videoElement.srcObject = stream;
 
-    const hands = new Hands({
-      locateFile: file => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
+    hands = new Hands({
+      locateFile: file =>
+        `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
     });
 
     hands.setOptions({
       maxNumHands: 1,
       modelComplexity: 0,
-      minDetectionConfidence: 0.7,
-      minTrackingConfidence: 0.7
+      minDetectionConfidence: 0.6,
+      minTrackingConfidence: 0.6
     });
 
     hands.onResults(onResults);
 
-    const camera = new Camera(videoElement, {
+    camera = new Camera(videoElement, {
       onFrame: async () => {
         await hands.send({ image: videoElement });
       },
@@ -46,9 +67,11 @@ async function initCamera() {
     });
 
     camera.start();
-  } catch (error) {
-    console.warn("Không thể truy cập camera:", error);
+  } catch (err) {
+    console.log("Camera error:", err);
   }
 }
 
-window.addEventListener("load", initCamera);
+// 🔥 RẤT QUAN TRỌNG cho iPhone
+document.addEventListener("click", initHandTracking, { once: true });
+document.addEventListener("touchstart", initHandTracking, { once: true });
