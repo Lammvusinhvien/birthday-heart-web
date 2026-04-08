@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday 💖</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <canvas id="particleCanvas"></canvas>
+
+  <video id="camera" autoplay playsinline muted></video>
+
+  <div id="birthdayText" class="hidden">
+    Chúc mừng sinh nhật <span id="name">Em yêu</span> 🎂💖
+  </div>
+
+  <div id="videoSection" class="hidden">
+    <div id="player"></div>
+  </div>
+
+  <div id="question" class="hidden">
+    <h2>Làm người yêu anh thêm một năm nữa nhé? 💕</h2>
+  </div>
+
+  <!-- MediaPipe -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+
+  <!-- YouTube API -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+
+  <!-- Scripts -->
+  <script src="particles.js"></script>
+  <script src="gesture.js"></script>
+  <script src="script.js"></script>
+
+</body>
+</html>
