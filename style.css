@@ -1,13 +1,13 @@
 body {
   margin: 0;
   overflow: hidden;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: #000;
   color: white;
   text-align: center;
 }
 
-canvas {
+#particleCanvas {
   position: fixed;
   top: 0;
   left: 0;
@@ -21,13 +21,14 @@ canvas {
   width: 120px;
   border-radius: 10px;
   z-index: 2;
+  opacity: 0.8;
 }
 
 #birthdayText {
   position: fixed;
   top: 40%;
   width: 100%;
-  font-size: 2rem;
+  font-size: 2.2rem;
   color: #ff69b4;
   z-index: 3;
   animation: fadeIn 2s ease forwards;
@@ -47,8 +48,14 @@ canvas {
   flex-direction: column;
 }
 
+#question h2 {
+  font-size: 2rem;
+  color: #ff6fa8;
+  padding: 20px;
+}
+
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 @keyframes fadeIn {
