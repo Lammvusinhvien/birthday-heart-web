@@ -1,49 +1,49 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Happy Birthday 💖</title>
-<link rel="stylesheet" href="style.css"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Birthday for Khánh Tâmm</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <audio id="bgMusic" loop preload="auto">
+    <source src="assets/music.mp3" type="audio/mpeg">
+  </audio>
 
-<canvas id="particleCanvas"></canvas>
+  <section id="introScreen" class="screen active">
+    <div id="introApp"></div>
 
-<audio id="bgMusic" loop preload="auto">
-  <source src="assets/music.mp3" type="audio/mpeg">
-</audio>
+    <div class="nav bottom-right">
+      <button id="btnIntroNext" class="btn">Tiếp ▶</button>
+    </div>
+  </section>
 
-<!-- INTRO -->
-<section id="intro" class="screen active">
-  <div id="birthdayText">
-    Chúc mừng sinh nhật Khánh Tâmm 🎂💖
-  </div>
-  <button id="toVideo" class="btn">Tiếp ▶</button>
-</section>
+  <section id="videoScreen" class="screen">
+    <div class="videoWrap">
+      <iframe
+        id="ytFrame"
+        src="https://www.youtube.com/embed/G99YMstPLHk?rel=0"
+        allow="autoplay; encrypted-media"
+        allowfullscreen>
+      </iframe>
+    </div>
 
-<!-- VIDEO -->
-<section id="video" class="screen">
-  <iframe
-    id="ytFrame"
-    src="https://www.youtube.com/embed/G99YMstPLHk?rel=0"
-    allow="autoplay; encrypted-media"
-    allowfullscreen>
-  </iframe>
+    <div class="nav bottom-center">
+      <button id="btnVideoBack" class="btn">◀ Quay lại</button>
+      <button id="btnVideoNext" class="btn">Tiếp ▶</button>
+    </div>
+  </section>
 
-  <div class="navRow">
-    <button id="backIntro" class="btn">◀ Quay lại</button>
-    <button id="toEnd" class="btn">Tiếp ▶</button>
-  </div>
-</section>
+  <section id="endScreen" class="screen">
+    <div class="endText">Em tha lỗi cho anh nhé? 💕</div>
 
-<!-- END -->
-<section id="end" class="screen">
-  <h2>Em tha lỗi cho anh nhé? 💕</h2>
-  <button id="backHome" class="btn">◀ Quay lại</button>
-</section>
+    <div class="nav bottom-center">
+      <button id="btnEndBack" class="btn">◀ Quay lại</button>
+    </div>
+  </section>
 
-<script src="particles.js"></script>
-<script src="script.js"></script>
+  <script type="module" src="intro-heart.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
