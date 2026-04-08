@@ -1,41 +1,49 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Happy Birthday 💖</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Happy Birthday 💖</title>
+<link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
-  <canvas id="particleCanvas"></canvas>
+<canvas id="particleCanvas"></canvas>
 
-  <video id="camera" autoplay playsinline muted></video>
+<audio id="bgMusic" loop preload="auto">
+  <source src="assets/music.mp3" type="audio/mpeg">
+</audio>
 
-  <div id="birthdayText" class="hidden">
-    Chúc mừng sinh nhật <span id="name">Khánh Tâmm</span> 🎂💖
+<!-- INTRO -->
+<section id="intro" class="screen active">
+  <div id="birthdayText">
+    Chúc mừng sinh nhật Khánh Tâmm 🎂💖
   </div>
+  <button id="toVideo" class="btn">Tiếp ▶</button>
+</section>
 
-  <div id="videoSection" class="hidden">
-    <div id="player"></div>
+<!-- VIDEO -->
+<section id="video" class="screen">
+  <iframe
+    id="ytFrame"
+    src="https://www.youtube.com/embed/G99YMstPLHk?rel=0"
+    allow="autoplay; encrypted-media"
+    allowfullscreen>
+  </iframe>
+
+  <div class="navRow">
+    <button id="backIntro" class="btn">◀ Quay lại</button>
+    <button id="toEnd" class="btn">Tiếp ▶</button>
   </div>
+</section>
 
-  <div id="question" class="hidden">
-    <h2>Em tha lỗi cho anh nhé? 💕</h2>
-  </div>
+<!-- END -->
+<section id="end" class="screen">
+  <h2>Em tha lỗi cho anh nhé? 💕</h2>
+  <button id="backHome" class="btn">◀ Quay lại</button>
+</section>
 
-  <!-- MediaPipe -->
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
-
-  <!-- YouTube API -->
-  <script src="https://www.youtube.com/iframe_api"></script>
-
-  <!-- Scripts -->
-  <script src="particles.js"></script>
-  <script src="gesture.js"></script>
-  <script src="script.js"></script>
-
+<script src="particles.js"></script>
+<script src="script.js"></script>
 </body>
 </html>

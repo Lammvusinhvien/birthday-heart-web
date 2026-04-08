@@ -1,56 +1,64 @@
-let startX = 0;
-let videoShown = false;
-let heartTriggered = false;
+const music=document.getElementById("bgMusic");
 
-// Fallback: chạm để tạo trái tim (rất quan trọng cho iPhone)
-function handleFirstInteraction() {
-  if (!heartTriggered) {
-    triggerHeartFormation();
-    heartTriggered = true;
-  }
+const intro=document.getElementById("intro");
+const video=document.getElementById("video");
+const end=document.getElementById("end");
+
+const toVideo=document.getElementById("toVideo");
+const backIntro=document.getElementById("backIntro");
+const toEnd=document.getElementById("toEnd");
+const backHome=document.getElementById("backHome");
+
+let started=false;
+
+function show(screen){
+  [intro,video,end].forEach(s=>s.classList.remove("active"));
+  screen.classList.add("active");
 }
 
-document.addEventListener("click", handleFirstInteraction);
-document.addEventListener("touchstart", handleFirstInteraction, { passive: true });
-
-// Vuốt để mở video
-document.addEventListener("touchstart", e => {
-  startX = e.touches[0].clientX;
-}, { passive: true });
-
-document.addEventListener("touchend", e => {
-  const endX = e.changedTouches[0].clientX;
-  if (Math.abs(endX - startX) > 50 && !videoShown) {
-    showVideo();
-    videoShown = true;
-  }
-});
-
-// YouTube
-let player;
-
-function onYouTubeIframeAPIReady() {
-  player = new YT.Player('player', {
-    height: '360',
-    width: '640',
-    videoId: 'dQw4w9WgXcQ', // 👉 Thay ID video nếu muốn
-    playerVars: { playsinline: 1 },
-    events: {
-      'onStateChange': onPlayerStateChange
+function fadeOut(ms=300){
+  const step=music.volume/(ms/30);
+  const i=setInterval(()=>{
+    music.volume=Math.max(0,music.volume-step);
+    if(music.volume<=0){
+      clearInterval(i);
+      music.pause();
     }
-  });
+  },30);
 }
 
-function showVideo() {
-  document.getElementById("videoSection").classList.remove("hidden");
-  if (window.YT && YT.Player) {
-    onYouTubeIframeAPIReady();
-  }
+function fadeIn(ms=300){
+  music.volume=0;
+  music.play();
+  const step=1/(ms/30);
+  const i=setInterval(()=>{
+    music.volume=Math.min(1,music.volume+step);
+    if(music.volume>=1) clearInterval(i);
+  },30);
 }
 
-function onPlayerStateChange(event) {
-  if (event.data === YT.PlayerState.ENDED) {
-    document.getElementById("videoSection").classList.add("hidden");
-    document.getElementById("question").classList.remove("hidden");
+document.addEventListener("click",()=>{
+  if(!started){
+    music.play();
+    started=true;
   }
-}
+},{once:true});
+
+toVideo.onclick=()=>{
+  fadeOut(300);
+  show(video);
+};
+
+backIntro.onclick=()=>{
+  show(intro);
+  fadeIn(300);
+};
+
+toEnd.onclick=()=>{
+  show(end);
+};
+
+backHome.onclick=()=>{
+  show(intro);
+  fadeIn(300);
+};
